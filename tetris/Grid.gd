@@ -9,17 +9,24 @@ func _ready():
 	for i in range(grid_width):
 		for j in range(grid_height / 2):
 			if randi() % 10 <= 1:
-				var block = preload("res://tetris/Block.tscn").instance()
-				block.init(i, j, randi() % 4)
-				$Blocks.add_child(block)
+				spawn_block_at(i, j, randi() % 4)
 
 func _process(delta):
 	pass
 
 func move_block_down(speed):
+	spawn_block_at(randi() % grid_width, -1, randi() % 4)
 	for block in $Blocks.get_children():
-		block.move_down(speed / 3)
+		if block.grid_position.y > grid_height + 3:
+			block.queue_free()
+		else:
+			block.move_down(speed / 3)
 	emit_signal("move_down_ended")
+
+func spawn_block_at(x, y, type):
+	var block = preload("res://tetris/Block.tscn").instance()
+	block.init(x, y, type)
+	$Blocks.add_child(block)
 
 func move_block_to(block, direction):
 	var next_position = block.grid_position + direction

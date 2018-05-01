@@ -12,6 +12,7 @@ func _ready():
 
 func _process(delta):
 	if Input.is_mouse_button_pressed(BUTTON_LEFT) and not paused:
+		pause()
 		$Player.shoot(self)
 
 func _physics_process(delta):
