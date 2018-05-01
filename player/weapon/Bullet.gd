@@ -9,6 +9,7 @@ var next_position = Vector2()
 var bounce_direction = Vector2()
 var previous_result
 var life = 0
+var direction = Vector2()
 
 func _ready():
 	$Tween.connect("tween_completed", self, "_on_tween_completed")
@@ -17,6 +18,13 @@ func _ready():
 func init(position, direction, ttl = 3, speed = 100):
 	self.ttl = ttl
 	self.speed = speed
+	self.position = position
+	self.direction = direction
+
+func start():
+	next_direction(position, direction)
+
+func next_direction(position, direction):
 	var space_state = get_world_2d().direct_space_state
 	var exclude = [self]
 	if previous_result:
@@ -42,7 +50,7 @@ func _on_tween_completed(obj, property):
 		destroy_bullet()
 	else:
 		emit_signal("bullet_hit", previous_result)
-		init(next_position, bounce_direction, self.ttl, self.speed)
+		next_direction(next_position, bounce_direction)
 
 func destroy_bullet():
 	emit_signal("bullet_end")

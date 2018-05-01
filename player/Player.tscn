@@ -1,14 +1,15 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://player/Player.gd" type="Script" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://player/weapon/types/regular.gd" type="Script" id=3]
 
 [sub_resource type="Gradient" id=1]
 
 offsets = PoolRealArray( 0, 0.721893, 1 )
 colors = PoolColorArray( 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0 )
 
-[node name="Player" type="Node2D"]
+[node name="Player" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
 aiming_size = 5
@@ -27,5 +28,12 @@ texture_mode = 1120534528
 sharp_limit = 2.0
 round_precision = 8
 _sections_unfolded = [ "Fill", "Material", "Visibility" ]
+
+[node name="Weapon" type="Node" parent="." index="2"]
+
+[node name="Regular" type="Node" parent="Weapon" index="0"]
+
+script = ExtResource( 3 )
+cooldown_amount = 0.1
 
 
