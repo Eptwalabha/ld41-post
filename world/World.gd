@@ -9,23 +9,13 @@ func _ready():
 	paused = false
 	$Tick.set_wait_time(speed)
 	$Tick.start()
-	pass
 
 func _process(delta):
 	if Input.is_mouse_button_pressed(BUTTON_LEFT) and not paused:
-		var direction = get_mouse_direction($Player.position)
-		$Player.shoot(self, direction)
+		$Player.shoot(self)
 
 func _physics_process(delta):
-	update_player_aiming()
-
-func update_player_aiming():
-	var direction = get_mouse_direction($Player.position)
-	var points = $Grid.get_collisions($Player.position, direction, $Player.aiming_size)
-	$Player.update_aiming(points)
-
-func get_mouse_direction(position):
-	return (get_viewport().get_mouse_position() - position).normalized()
+	$Player.update_aiming($Grid)
 
 func pause():
 	paused = true
@@ -47,7 +37,10 @@ func _on_Bullet_hit(ray_result):
 	var body = ray_result.collider
 	spawn_hit_particle(ray_result.position, ray_result.normal.angle())
 	if body.is_in_group("block"):
-		$Grid.move_block_to(body, ray_result.normal * -1)
+		if body.type == 1:
+			body.queue_free()
+		else:
+			$Grid.move_block_to(body, ray_result.normal * -1)
 
 func _on_Bullet_end():
 	resume()

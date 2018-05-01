@@ -6,16 +6,17 @@
 
 [sub_resource type="Gradient" id=1]
 
-offsets = PoolRealArray( 0, 0.721893, 1 )
+offsets = PoolRealArray( 0, 0.899408, 1 )
 colors = PoolColorArray( 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0 )
 
 [node name="Player" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
-aiming_size = 5
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
+position = Vector2( 9.53674e-07, -9.53674e-07 )
+scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 2 )
 
 [node name="Aiming" type="Line2D" parent="." index="1"]
@@ -31,9 +32,12 @@ _sections_unfolded = [ "Fill", "Material", "Visibility" ]
 
 [node name="Weapon" type="Node" parent="." index="2"]
 
-[node name="Regular" type="Node" parent="Weapon" index="0"]
+[node name="Regular" type="Node2D" parent="Weapon" index="0"]
 
 script = ExtResource( 3 )
-cooldown_amount = 0.1
+bullet_bounces = 4
+bullet_speed = 500
+cooldown_amount = 0.3
+cooldown = 0.0
 
 

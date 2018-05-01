@@ -11,7 +11,6 @@ radius = 8.0
 [node name="Bullet" type="Node2D"]
 
 script = ExtResource( 1 )
-ttl = 3
 
 [node name="Tween" type="Tween" parent="." index="0"]
 

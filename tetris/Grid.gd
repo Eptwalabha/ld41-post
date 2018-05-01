@@ -37,23 +37,3 @@ func grid_position_is_available(position):
 
 func eq(a, b):
 	return abs(a - b) < 0.0001
-
-func get_collisions(position, direction, nbr_bounce):
-	var space_state = get_world_2d().direct_space_state
-	return next_collision(position, direction, nbr_bounce - 1, [], space_state)
-
-func next_collision(position, direction, bounce_left, points, space_state, previous = null):
-	if bounce_left < 0:
-		return points
-	var exclude = [3]
-	if previous:
-		exclude = [previous.rid, 3]
-	var result = space_state.intersect_ray(position, position + direction * 1000, exclude, 3)
-	if result.empty() or result.normal == Vector2(0, 0):
-		return points
-	else:
-		var next_position = result.position
-		var new_direction = direction.bounce(result.normal)
-		points.append(next_position)
-		return next_collision(next_position, new_direction, bounce_left - 1, points, space_state, result)
-

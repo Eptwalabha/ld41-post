@@ -9,6 +9,7 @@ func _ready():
 func init(grid_x, grid_y, type):
 	grid_position = Vector2(grid_x, grid_y)
 	self.type = type
+	$Sprite.frame = type
 	update_position()
 
 func move_down(speed):
