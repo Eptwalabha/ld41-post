@@ -5,7 +5,7 @@
 offsets = PoolRealArray( 0, 0.118343, 0.502959, 0.869823, 1 )
 colors = PoolColorArray( 1, 1, 1, 1, 0.789062, 0.55481, 0, 1, 1, 0, 0, 0.77349, 0, 0, 0, 0.729294, 0, 0, 0, 0.0497255 )
 
-[sub_resource type="GradientTexture" id=2]
+[sub_resource type="GradientTexture" id=5]
 
 flags = 4
 gradient = SubResource( 1 )
@@ -16,7 +16,7 @@ width = 2048
 min_value = 0.0
 max_value = 1.0
 bake_resolution = 100
-_data = [ Vector2( 0.509478, 0.231445 ), 0.0, 0.0, 0, 0, Vector2( 0.882043, 1 ), 0.131749, 0.0, 0, 0 ]
+_data = [ Vector2( 0, 0.188477 ), 0.0, 0.0, 0, 0, Vector2( 0.52406, 0.381836 ), -3.90009, -3.90009, 0, 0, Vector2( 0.882043, 1 ), 0.131749, 0.0, 0, 0 ]
 
 [sub_resource type="CurveTexture" id=4]
 
@@ -24,7 +24,7 @@ flags = 4
 width = 2048
 curve = SubResource( 3 )
 
-[sub_resource type="ParticlesMaterial" id=5]
+[sub_resource type="ParticlesMaterial" id=6]
 
 render_priority = 0
 trail_divisor = 1
@@ -38,7 +38,7 @@ flatness = 0.0
 gravity = Vector3( 0, 0, 0 )
 initial_velocity = 0.0
 initial_velocity_random = 0.0
-angular_velocity = 30.0
+angular_velocity = 90.0
 angular_velocity_random = 1.0
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
@@ -55,7 +55,7 @@ angle_random = 1.0
 scale = 10.0
 scale_random = 1.0
 scale_curve = SubResource( 4 )
-color_ramp = SubResource( 2 )
+color_ramp = SubResource( 5 )
 hue_variation = 0.0
 hue_variation_random = 0.0
 anim_speed = 0.0
@@ -63,7 +63,7 @@ anim_speed_random = 0.0
 anim_offset = 0.0
 anim_offset_random = 0.0
 anim_loop = false
-_sections_unfolded = [ "Angle", "Color", "Emission Shape", "Gravity", "Initial Velocity", "Linear Accel", "Scale", "Spread" ]
+_sections_unfolded = [ "Angle", "Angular Velocity", "Color", "Emission Shape", "Gravity", "Initial Velocity", "Linear Accel", "Scale", "Spread" ]
 
 [node name="Fire" type="Particles2D" index="0"]
 
@@ -80,7 +80,7 @@ fract_delta = true
 visibility_rect = Rect2( -100, -100, 200, 200 )
 local_coords = false
 draw_order = 0
-process_material = SubResource( 5 )
+process_material = SubResource( 6 )
 texture = null
 normal_map = null
 h_frames = 1
