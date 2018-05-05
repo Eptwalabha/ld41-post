@@ -16,7 +16,10 @@ func _process(delta):
 	position = grid_position * 32 + Vector2(16, 16)
 
 func update_aiming(grid):
-	var points = weapon.get_collision_path(position, get_mouse_direction())
+	var direction = get_mouse_direction()
+	if direction.x == 0 and direction.y == 0:
+		direction = Vector2(0, -1)
+	var points = weapon.get_collision_path(position, direction)
 	var points_count = points.size()
 	var sight_points_count = $Aiming.get_point_count()
 	var diff = sight_points_count - points_count
