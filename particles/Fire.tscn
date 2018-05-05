@@ -16,7 +16,7 @@ width = 2048
 min_value = 0.0
 max_value = 1.0
 bake_resolution = 100
-_data = [ Vector2( 0, 0.188477 ), 0.0, 0.0, 0, 0, Vector2( 0.52406, 0.381836 ), -3.90009, -3.90009, 0, 0, Vector2( 0.882043, 1 ), 0.131749, 0.0, 0, 0 ]
+_data = [ Vector2( 0, 0.188477 ), 0.0, 0.0, 0, 0, Vector2( 0.524789, 0.295898 ), -3.37647, -3.37647, 0, 0, Vector2( 0.954223, 0.790039 ), 0.131749, 0.0, 0, 0 ]
 
 [sub_resource type="CurveTexture" id=4]
 
@@ -42,7 +42,7 @@ angular_velocity = 90.0
 angular_velocity_random = 1.0
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
-linear_accel = 30.0
+linear_accel = 10.0
 linear_accel_random = 0.0
 radial_accel = 0.0
 radial_accel_random = 0.0
@@ -52,7 +52,7 @@ damping = 0.0
 damping_random = 0.0
 angle = 90.0
 angle_random = 1.0
-scale = 10.0
+scale = 20.0
 scale_random = 1.0
 scale_curve = SubResource( 4 )
 color_ramp = SubResource( 5 )
@@ -65,11 +65,11 @@ anim_offset_random = 0.0
 anim_loop = false
 _sections_unfolded = [ "Angle", "Angular Velocity", "Color", "Emission Shape", "Gravity", "Initial Velocity", "Linear Accel", "Scale", "Spread" ]
 
-[node name="Fire" type="Particles2D" index="0"]
+[node name="Fire" type="Particles2D"]
 
 emitting = true
 amount = 15
-lifetime = 1.0
+lifetime = 3.0
 one_shot = false
 preprocess = 0.0
 speed_scale = 1.0
@@ -85,6 +85,6 @@ texture = null
 normal_map = null
 h_frames = 1
 v_frames = 1
-_sections_unfolded = [ "Drawing", "Process Material" ]
+_sections_unfolded = [ "Process Material", "Time" ]
 
 

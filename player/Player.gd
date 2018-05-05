@@ -1,6 +1,8 @@
 extends Node2D
 
 var weapon = null
+var grid_position = Vector2()
+
 onready var weapon_types = {
 	'regular': $Weapon/Regular
 }
@@ -11,6 +13,7 @@ func _ready():
 
 func _process(delta):
 	weapon.update(delta)
+	position = grid_position * 32 + Vector2(16, 16)
 
 func update_aiming(grid):
 	var points = weapon.get_collision_path(position, get_mouse_direction())
@@ -25,6 +28,9 @@ func update_aiming(grid):
 			$Aiming.remove_point(i)
 	for i in points.size():
 		$Aiming.points[i] = points[i] - position
+
+func set_grid_position(x, y):
+	grid_position = Vector2(x, y)
 
 func set_weapon(weapon_name):
 	if weapon_types[weapon_name]:

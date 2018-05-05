@@ -9,7 +9,7 @@
 offsets = PoolRealArray( 0, 0.899408, 1 )
 colors = PoolColorArray( 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0 )
 
-[node name="Player" type="Node2D" index="0"]
+[node name="Player" type="Node2D"]
 
 script = ExtResource( 1 )
 
@@ -21,6 +21,7 @@ texture = ExtResource( 2 )
 
 [node name="Aiming" type="Line2D" parent="." index="1"]
 
+show_behind_parent = true
 points = PoolVector2Array(  )
 width = 2.0
 default_color = Color( 0.929688, 0.25058, 0.25058, 1 )

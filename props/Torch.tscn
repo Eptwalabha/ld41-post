@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://props/Torch.gd" type="Script" id=1]
+[ext_resource path="res://props/torch.png" type="Texture" id=2]
+[ext_resource path="res://particles/Fire.tscn" type="PackedScene" id=3]
+
+[node name="Torch" type="Node2D"]
+
+script = ExtResource( 1 )
+lighten = false
+
+[node name="Sprite" type="Sprite" parent="." index="0"]
+
+position = Vector2( -5.58794e-09, -14.9146 )
+texture = ExtResource( 2 )
+hframes = 2
+_sections_unfolded = [ "Animation" ]
+
+[node name="Fire" parent="." index="1" instance=ExtResource( 3 )]
+
+position = Vector2( 0, -26.9903 )
+scale = Vector2( 1.37463, 1.42733 )
+emitting = false
+
+

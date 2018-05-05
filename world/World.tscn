@@ -12,7 +12,7 @@ bullet_speed = 800
 
 [node name="Player" parent="." index="0" instance=ExtResource( 2 )]
 
-position = Vector2( 232, 600 )
+_sections_unfolded = [ "Transform" ]
 
 [node name="Grid" parent="." index="1" instance=ExtResource( 3 )]
 

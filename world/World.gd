@@ -7,6 +7,9 @@ var paused = false
 
 func _ready():
 	paused = false
+	$Player.set_grid_position(floor($Grid.grid_width / 2), $Grid.grid_height - 1)
+	print($Player.grid_position)
+	print($Player.position)
 	$Tick.set_wait_time(speed)
 	$Tick.start()
 
