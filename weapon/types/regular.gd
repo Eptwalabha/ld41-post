@@ -9,7 +9,7 @@ func update(delta):
 
 func shoot(position, direction):
 	cooldown = cooldown_amount
-	var bullet = preload("res://player/weapon/Bullet.tscn").instance()
+	var bullet = preload("res://weapon/Bullet.tscn").instance()
 	bullet.init(position, direction, self)
 	return bullet
 

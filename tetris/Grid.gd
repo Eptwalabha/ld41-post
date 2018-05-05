@@ -2,13 +2,13 @@ extends Node2D
 
 signal move_down_ended
 
-export (int) var grid_width = 8
-export (int) var grid_height = 10
+var grid_width = 10
+var grid_height = 22
 
 func _ready():
 	for i in range(grid_width):
-		for j in range(grid_height / 2):
-			if randi() % 10 <= 1:
+		for j in range(grid_height / 10 * 9):
+			if randi() % 10 <= 6:
 				spawn_block_at(i, j, randi() % 4)
 
 func _process(delta):

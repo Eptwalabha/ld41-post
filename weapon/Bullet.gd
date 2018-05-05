@@ -33,6 +33,7 @@ func next_move():
 					Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 		$Tween.start()
 	else:
+		print("destroy next is null")
 		destroy_bullet()
 
 func _on_tween_completed(obj, prop):
@@ -42,6 +43,7 @@ func _on_tween_completed(obj, prop):
 		direction = next.direction
 		next_move()
 	else:
+		print("destroy all bounces")
 		destroy_bullet()
 
 func destroy_bullet():

@@ -1,7 +1,8 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://player/weapon/Bullet.gd" type="Script" id=1]
-[ext_resource path="res://player/weapon/bullet.png" type="Texture" id=2]
+[ext_resource path="res://weapon/Bullet.gd" type="Script" id=1]
+[ext_resource path="res://weapon/bullet.png" type="Texture" id=2]
+
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -23,7 +24,6 @@ playback/speed = 1.0
 
 [node name="Area2D" type="Area2D" parent="." index="1"]
 
-editor/display_folded = true
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0

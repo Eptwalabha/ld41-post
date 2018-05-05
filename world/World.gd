@@ -8,15 +8,13 @@ var paused = false
 func _ready():
 	paused = false
 	$Player.set_grid_position(floor($Grid.grid_width / 2), $Grid.grid_height - 1)
-	print($Player.grid_position)
-	print($Player.position)
 	$Tick.set_wait_time(speed)
 	$Tick.start()
 
 func _process(delta):
 	if Input.is_mouse_button_pressed(BUTTON_LEFT) and not paused:
-		pause()
-		$Player.shoot(self)
+		if $Player.shoot(self):
+			pause()
 
 func _physics_process(delta):
 	$Player.update_aiming($Grid)

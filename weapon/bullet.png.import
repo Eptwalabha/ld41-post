@@ -2,14 +2,14 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/bullet.png-c0b5e862121d96d1909a322ae84eb04a.stex"
+path="res://.import/bullet.png-2ad08166cb1ce004d71eb50f77e207aa.stex"
 
 [deps]
 
-source_file="res://player/weapon/bullet.png"
+source_file="res://weapon/bullet.png"
 source_md5="3caea3477ccf10eeae866cc87be88796"
 
-dest_files=[ "res://.import/bullet.png-c0b5e862121d96d1909a322ae84eb04a.stex" ]
+dest_files=[ "res://.import/bullet.png-2ad08166cb1ce004d71eb50f77e207aa.stex" ]
 dest_md5="75ce29cb6543c10f0e47c49b7acd2f3e"
 
 [params]
