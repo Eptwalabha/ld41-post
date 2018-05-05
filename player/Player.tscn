@@ -37,7 +37,7 @@ _sections_unfolded = [ "Fill", "Material", "Visibility" ]
 
 script = ExtResource( 3 )
 bullet_bounces = 4
-bullet_speed = 500
+bullet_speed = 800
 cooldown_amount = 0.3
 cooldown = 0.0
 

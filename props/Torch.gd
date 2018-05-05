@@ -17,3 +17,7 @@ func light():
 func extinguish():
 	lighten = false
 	$Fire.set_emitting(false)
+
+
+func _on_Area2D_area_entered(area):
+	light()
