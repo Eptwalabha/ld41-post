@@ -6,6 +6,15 @@ var grid_width = 10
 var grid_height = 22
 var spawn = 0
 
+var shapes = [
+	[Vector2(0, 0), Vector2(1, 0), Vector2(2, 0), Vector2(0, 1)],	# L
+	[Vector2(0, 1), Vector2(1, 1), Vector2(2, 1), Vector2(0, 0)],	# J
+	[Vector2(0, 0), Vector2(1, 0), Vector2(2, 0), Vector2(3, 0)],	# I
+	[Vector2(0, 0), Vector2(1, 0), Vector2(2, 0), Vector2(1, 1)],	# T
+	[Vector2(0, 0), Vector2(1, 0), Vector2(1, 1), Vector2(2, 1)],	# S
+	[Vector2(0, 1), Vector2(1, 1), Vector2(1, 0), Vector2(2, 0)]	# Z
+]
+
 func _ready():
 	pass
 
@@ -14,7 +23,12 @@ func _process(delta):
 
 func move_block_down(speed):
 	if spawn <= 0:
-		spawn_tetromino_at(randi() % grid_width, -1, null)
+		var spec = {
+			'type': randi() % 4,
+			'shape': shapes[randi() % shapes.size()],
+			'offset_x': randi() % (grid_width - 4)
+		}
+		spawn_tetromino_at(randi() % grid_width, -1, spec)
 		spawn = 3
 	spawn -= 1
 	clean_old_blocks()
