@@ -16,12 +16,20 @@ func _process(delta):
 
 func move_block_down(speed):
 	spawn_block_at(randi() % grid_width, -1, randi() % 4)
+	clean_old_blocks()
+	check_for_full_raw()
 	for block in $Blocks.get_children():
-		if block.grid_position.y > grid_height + 3:
-			block.queue_free()
-		else:
-			block.move_down(speed / 3)
+		block.move_down(speed / 3)
 	emit_signal("move_down_ended")
+
+func clean_old_blocks():
+	for block in $Blocks.get_children():
+		if block.grid_position.y > grid_height + 1:
+			block.queue_free()
+
+func check_for_full_raw():
+	# delete line of blocks here
+	pass
 
 func spawn_block_at(x, y, type):
 	var block = preload("res://tetris/Block.tscn").instance()
@@ -33,8 +41,20 @@ func move_block_to(block, direction):
 	if within_bounds(next_position) and grid_position_is_available(next_position):
 		block.move_to(direction)
 
+func block_at(x, y):
+	for block in $Blocks.get_children():
+		if block.grid_position.x == x and block.grid_position.y == y:
+			return block
+	return null
+
+func is_grid_position_available(x, y):
+	return within_bounds(Vector2(x, y)) and not block_at(x, y)
+
 func within_bounds(position):
-	return position.x >= 0 and position.y >= 0 and position.x < grid_width and position.y < grid_height
+	return within_bounds_x(position.x) and position.y >= 0 and position.y < grid_height
+
+func within_bounds_x(x):
+	return x >= 0 and x < grid_width
 
 func grid_position_is_available(position):
 	for block in $Blocks.get_children():

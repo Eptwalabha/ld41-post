@@ -17,7 +17,7 @@ func move_down(speed):
 
 func move_to (direction):
 	grid_position += direction
-	
+
 func _process(delta):
 	update_position()
 

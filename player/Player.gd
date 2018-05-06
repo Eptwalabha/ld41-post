@@ -1,7 +1,12 @@
 extends Node2D
 
+signal player_moved
+signal player_fired
+
 var weapon = null
 var grid_position = Vector2()
+var tween_position = Vector2()
+var moving = false
 
 onready var weapon_types = {
 	'regular': $Weapon/Regular
@@ -10,10 +15,12 @@ onready var weapon_types = {
 func _ready():
 	weapon = $Weapon/Regular
 	$Aiming.add_point(Vector2())
+	$Tween.connect("tween_completed", self, "_on_Tween_movement_completed")
+	tween_position = position
 
 func _process(delta):
 	weapon.update(delta)
-	position = grid_position * 32 + Vector2(16, 16)
+	position = tween_position
 
 func update_aiming(grid):
 	var direction = get_mouse_direction()
@@ -32,8 +39,23 @@ func update_aiming(grid):
 	for i in points.size():
 		$Aiming.points[i] = points[i] - position
 
+func move_x(x):
+	moving = true
+	grid_position.x += x
+	var next_position = grid_position * 32 + Vector2(16, 16)
+	$Tween.interpolate_property(
+				self, "tween_position",
+				position, next_position,
+				.2, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	$Tween.start()
+
+func ready_to_move():
+	return not moving
+
 func set_grid_position(x, y):
 	grid_position = Vector2(x, y)
+	position = grid_position * 32 + Vector2(16, 16)
+	tween_position = position
 
 func set_weapon(weapon_name):
 	if weapon_types[weapon_name]:
@@ -51,3 +73,8 @@ func shoot(parent):
 			bullet.start()
 			bullet.connect("bullet_end", parent, "_on_Bullet_end")
 			bullet.connect("bullet_hit", parent, "_on_Bullet_hit")
+			emit_signal("player_fired")
+
+func _on_Tween_movement_completed(obj, key):
+	moving = false
+	emit_signal("player_moved")

@@ -33,6 +33,8 @@ _sections_unfolded = [ "Fill", "Material", "Visibility" ]
 
 [node name="Weapon" type="Node" parent="." index="2"]
 
+editor/display_folded = true
+
 [node name="Regular" type="Node2D" parent="Weapon" index="0"]
 
 script = ExtResource( 3 )
@@ -40,5 +42,14 @@ bullet_bounces = 1
 bullet_speed = 800
 cooldown_amount = 0.5
 cooldown = 0
+
+[node name="Tween" type="Tween" parent="." index="3"]
+
+repeat = false
+playback_process_mode = 1
+playback_speed = 1.0
+playback/active = false
+playback/repeat = false
+playback/speed = 1.0
 
 

@@ -9,4 +9,4 @@ func _process(delta):
 	timeout -= delta
 	if timeout <= 0:
 		queue_free()
-	
+

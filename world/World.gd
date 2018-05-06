@@ -8,6 +8,7 @@ var paused = false
 func _ready():
 	paused = false
 	$Player.set_grid_position(floor($Grid.grid_width / 2), $Grid.grid_height - 1)
+	$Player.connect("player_moved", self, "_on_Player_moved")
 	$Tick.set_wait_time(speed)
 	$Tick.start()
 
@@ -15,9 +16,18 @@ func _process(delta):
 	if Input.is_mouse_button_pressed(BUTTON_LEFT) and not paused:
 		if $Player.shoot(self):
 			pause()
+	if $Player.ready_to_move():
+		if Input.is_action_pressed("ui_right"):
+			move_player(1)
+		if Input.is_action_pressed("ui_left"):
+			move_player(-1)
 
 func _physics_process(delta):
 	$Player.update_aiming($Grid)
+
+func move_player(x):
+	if $Grid.is_grid_position_available($Player.grid_position.x + x, $Player.grid_position.y):
+		$Player.move_x(x)
 
 func pause():
 	paused = true
@@ -49,6 +59,12 @@ func _on_Bullet_end():
 
 func _on_Tick_timeout():
 	$Grid.move_block_down(speed / 3)
-	
+
 func _on_Grid_move_down_ended():
 	$Tick.start()
+
+func _on_Player_moved():
+	pass
+
+func _on_Player_fired():
+	pass
