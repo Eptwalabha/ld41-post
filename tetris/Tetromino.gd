@@ -1,10 +1,12 @@
 extends Node
 
+var type
 
 func _ready():
 	pass
 
 func init(x, y, spec):
+	type = spec.type
 	for block_spec in spec.shape:
 		var block = preload("res://tetris/Block.tscn").instance()
 		block.init(block_spec.x + spec.offset_x, block_spec.y - 1, spec.type, self)

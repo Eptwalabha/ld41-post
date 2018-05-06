@@ -7,12 +7,12 @@
 [sub_resource type="CircleShape2D" id=1]
 
 custom_solver_bias = 0.0
-radius = 8.0
+radius = 5.7117
 
 [node name="Torch" type="Node2D"]
 
 script = ExtResource( 1 )
-lighten = false
+lit = false
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
@@ -42,7 +42,7 @@ _sections_unfolded = [ "Collision" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" index="0"]
 
-position = Vector2( 0, -24 )
+position = Vector2( 0, -26.6161 )
 shape = SubResource( 1 )
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]

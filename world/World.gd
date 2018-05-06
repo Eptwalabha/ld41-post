@@ -8,15 +8,17 @@ var paused = false
 func _ready():
 	paused = false
 	$Player.set_grid_position(floor($Grid.grid_width / 2), $Grid.grid_height - 1)
-	$Player.connect("player_moved", self, "_on_Player_moved")
+	$Player.connect("moved", self, "_on_Player_moved")
+	$Player.connect("fired", self, "_on_Player_fired")
+	$Grid.connect("block_destroyed", self, "_on_Block_destroyed")
 	$Tick.set_wait_time(speed)
-	$Tick.start()
+	#$Tick.start()
 
 func _process(delta):
 	if Input.is_mouse_button_pressed(BUTTON_LEFT) and not paused:
 		if $Player.shoot(self):
 			pause()
-	if $Player.ready_to_move():
+	if not paused and $Player.ready_to_move():
 		if Input.is_action_pressed("ui_right"):
 			move_player(1)
 		if Input.is_action_pressed("ui_left"):
@@ -37,6 +39,9 @@ func resume():
 	paused = false
 	$Tick.set_paused(paused)
 
+func spawn_explosion(position):
+	pass
+
 func spawn_hit_particle(position, rotation):
 	var particle = Particle.instance()
 	particle.position = position
@@ -49,25 +54,27 @@ func _on_Bullet_hit(ray_result):
 	var body = ray_result.collider
 	spawn_hit_particle(ray_result.position, ray_result.normal.angle())
 	if body.is_in_group("block"):
-		if body.type == 1:
-			body.queue_free()
-		else:
-			$Grid.move_block_to(body, ray_result.normal * -1)
+		$Grid.block_has_been_hit(body, ray_result.normal)
 
 func _on_Bullet_end():
 	$Grid.move_block_down(speed / 3)
-	$Tick.start()
+	#$Tick.start()
 	resume()
 
 func _on_Tick_timeout():
 	$Grid.move_block_down(speed / 3)
 
 func _on_Grid_move_down_ended():
-	$Tick.start()
-
-func _on_Player_moved():
-	$Grid.move_block_down(speed / 3)
-	$Tick.start()
+	#$Tick.start()
+	pass
 
 func _on_Player_fired():
 	pause()
+
+func _on_Player_moved():
+	$Grid.move_block_down(speed / 3)
+	#$Tick.start()
+	pass
+
+func _on_Block_destroyed(position):
+	spawn_explosion(position)

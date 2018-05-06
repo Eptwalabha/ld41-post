@@ -1,23 +1,25 @@
 extends Node2D
 
-export (bool) var lighten = false
+signal lit
+
+export (bool) var lit = false
 
 func _ready():
-	if lighten:
+	if lit:
 		$Sprite.frame = 1
 	else:
 		$Sprite.frame = 0
-	$Fire.set_emitting(lighten)
+	$Fire.set_emitting(lit)
 
 func light():
-	lighten = true
+	emit_signal("lit")
+	lit = true
 	$Sprite.frame = 1
 	$Fire.set_emitting(true)
 
 func extinguish():
-	lighten = false
+	lit = false
 	$Fire.set_emitting(false)
-
 
 func _on_Area2D_area_entered(area):
 	light()

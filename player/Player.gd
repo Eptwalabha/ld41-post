@@ -1,7 +1,7 @@
 extends Node2D
 
-signal player_moved
-signal player_fired
+signal moved
+signal fired
 
 var weapon = null
 var grid_position = Vector2()
@@ -16,6 +16,7 @@ func _ready():
 	weapon = $Weapon/Regular
 	$Aiming.add_point(Vector2())
 	$Tween.connect("tween_completed", self, "_on_Tween_movement_completed")
+	$Sprite.frame = 2
 	tween_position = position
 
 func _process(delta):
@@ -73,8 +74,8 @@ func shoot(parent):
 			bullet.start()
 			bullet.connect("bullet_end", parent, "_on_Bullet_end")
 			bullet.connect("bullet_hit", parent, "_on_Bullet_hit")
-			emit_signal("player_fired")
+			emit_signal("fired")
 
 func _on_Tween_movement_completed(obj, key):
 	moving = false
-	emit_signal("player_moved")
+	emit_signal("moved")

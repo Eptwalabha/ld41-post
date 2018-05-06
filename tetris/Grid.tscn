@@ -22,7 +22,7 @@ extents = Vector2( 192, 16 )
 custom_solver_bias = 0.0
 extents = Vector2( 16, 332.932 )
 
-[node name="Grid" type="Node2D" index="0"]
+[node name="Grid" type="Node2D"]
 
 script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
