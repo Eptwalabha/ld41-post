@@ -1,6 +1,6 @@
 extends Node
 
-export (float) var speed = 1
+export (float) var speed = 3
 export (int) var bullet_speed = 1000
 var Particle = preload("res://particles/Hit.tscn")
 var paused = false
@@ -26,7 +26,7 @@ func _physics_process(delta):
 	$Player.update_aiming($Grid)
 
 func move_player(x):
-	if $Grid.is_grid_position_available($Player.grid_position.x + x, $Player.grid_position.y):
+	if $Grid.is_grid_position_available($Player.grid_position + Vector2(x, 0)):
 		$Player.move_x(x)
 
 func pause():
@@ -55,6 +55,8 @@ func _on_Bullet_hit(ray_result):
 			$Grid.move_block_to(body, ray_result.normal * -1)
 
 func _on_Bullet_end():
+	$Grid.move_block_down(speed / 3)
+	$Tick.start()
 	resume()
 
 func _on_Tick_timeout():
@@ -64,7 +66,8 @@ func _on_Grid_move_down_ended():
 	$Tick.start()
 
 func _on_Player_moved():
-	pass
+	$Grid.move_block_down(speed / 3)
+	$Tick.start()
 
 func _on_Player_fired():
-	pass
+	pause()
