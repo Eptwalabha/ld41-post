@@ -10,6 +10,7 @@ func init(x, y, spec):
 	for block_spec in spec.shape:
 		var block = preload("res://tetris/Block.tscn").instance()
 		block.init(block_spec.x + spec.offset_x, block_spec.y - 1, spec.type, self)
+		block.set_tint(spec.tint)
 		$Blocks.add_child(block)
 
 func move_down():

@@ -1,31 +1,23 @@
-extends Node2D
+extends "res://weapon/weapon.gd"
 
-export (int) var bullet_bounces = 1
-export (int) var bullet_speed = 800
-export (float) var cooldown_amount = 0.5
-export (float) var cooldown = 0
-export (Color) var color = Color(.8, .8, .8)
-
-func shoot(position, direction):
-	return null
-
-func can_shoot():
-	return false
-
-func update(delta):
+func _ready():
 	pass
 
-func get_aiming_color():
-	return color
+func update(delta):
+	if cooldown > 0:
+		cooldown -= delta
+
+func shoot(position, direction):
+	cooldown = cooldown_amount
+	var bullet = preload("res://weapon/Bullet.tscn").instance()
+	bullet.init(position, direction, self)
+	return bullet
 
 func get_collision_path(position, direction):
 	var points = [position]
 	var next = next_collision_point(position, direction)
-	var i = 0
-	while (next and i <= bullet_bounces):
-		i += 1
+	if next:
 		points.append(next.position)
-		next = next_collision_point(next.position, next.direction, next)
 	return points
 
 func next_collision_point(position, direction, previous = null):
@@ -45,3 +37,6 @@ func process_collision(direction, result):
 		'rid': result.rid,
 		'result': result
 	}
+
+func can_shoot():
+	return cooldown <= 0

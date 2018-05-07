@@ -1,4 +1,4 @@
-extends "../weapon.gd"
+extends "res://weapon/weapon.gd"
 
 func _ready():
 	pass

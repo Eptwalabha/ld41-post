@@ -5,7 +5,7 @@
 [ext_resource path="res://tetris/Grid.tscn" type="PackedScene" id=3]
 [ext_resource path="res://props/Torch.tscn" type="PackedScene" id=4]
 
-[node name="World" type="Node" index="0"]
+[node name="World" type="Node"]
 
 script = ExtResource( 1 )
 speed = 2.0
@@ -44,6 +44,11 @@ position = Vector2( 42.6309, 704.929 )
 
 position = Vector2( 1.44193, 291.673 )
 rotation = 0.785397
+
+[node name="Torch5" parent="Props" index="4" instance=ExtResource( 4 )]
+
+position = Vector2( 248, 704 )
+lit = true
 
 [connection signal="move_down_ended" from="Grid" to="." method="_on_Grid_move_down_ended"]
 

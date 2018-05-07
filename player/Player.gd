@@ -9,11 +9,12 @@ var tween_position = Vector2()
 var moving = false
 
 onready var weapon_types = {
-	'regular': $Weapon/Regular
+	'regular': $Weapon/Regular,
+	'laser': $Weapon/Laser
 }
 
 func _ready():
-	weapon = $Weapon/Regular
+	set_weapon('laser')
 	$Aiming.add_point(Vector2())
 	$Tween.connect("tween_completed", self, "_on_Tween_movement_completed")
 	$Sprite.frame = 2
@@ -61,6 +62,7 @@ func set_grid_position(x, y):
 func set_weapon(weapon_name):
 	if weapon_types[weapon_name]:
 		weapon = weapon_types[weapon_name]
+		$Aiming.default_color = weapon.get_aiming_color()
 
 func get_mouse_direction():
 	return (get_viewport().get_mouse_position() - position).normalized()

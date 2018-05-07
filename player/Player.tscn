@@ -3,11 +3,7 @@
 [ext_resource path="res://player/Player.gd" type="Script" id=1]
 [ext_resource path="res://player/player.png" type="Texture" id=2]
 [ext_resource path="res://weapon/types/regular.gd" type="Script" id=3]
-
-[sub_resource type="Gradient" id=1]
-
-offsets = PoolRealArray( 0, 0.899408, 1 )
-colors = PoolColorArray( 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0 )
+[ext_resource path="res://weapon/types/laser.gd" type="Script" id=4]
 
 [node name="Player" type="Node2D"]
 
@@ -16,7 +12,6 @@ script = ExtResource( 1 )
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
 position = Vector2( 0, 4.76837e-07 )
-scale = Vector2( 1, 1 )
 texture = ExtResource( 2 )
 vframes = 4
 hframes = 2
@@ -29,15 +24,12 @@ show_behind_parent = true
 points = PoolVector2Array(  )
 width = 2.0
 default_color = Color( 0.929688, 0.25058, 0.25058, 1 )
-gradient = SubResource( 1 )
 texture_mode = 1120534528
 sharp_limit = 2.0
 round_precision = 8
 _sections_unfolded = [ "Fill", "Material", "Visibility" ]
 
 [node name="Weapon" type="Node" parent="." index="2"]
-
-editor/display_folded = true
 
 [node name="Regular" type="Node2D" parent="Weapon" index="0"]
 
@@ -46,6 +38,16 @@ bullet_bounces = 1
 bullet_speed = 800
 cooldown_amount = 0.5
 cooldown = 0
+color = Color( 0.8, 0.8, 0.8, 1 )
+
+[node name="Laser" type="Node2D" parent="Weapon" index="1"]
+
+script = ExtResource( 4 )
+bullet_bounces = 0
+bullet_speed = 1000
+cooldown_amount = 0.5
+cooldown = 0
+color = Color( 1, 0, 0, 1 )
 
 [node name="Tween" type="Tween" parent="." index="3"]
 

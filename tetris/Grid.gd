@@ -8,12 +8,23 @@ var grid_height = 22
 var spawn = 0
 
 var shapes = [
-	[Vector2(0, 0), Vector2(1, 0), Vector2(2, 0), Vector2(0, 1)],	# L
-	[Vector2(0, 1), Vector2(1, 1), Vector2(2, 1), Vector2(0, 0)],	# J
 	[Vector2(0, 0), Vector2(1, 0), Vector2(2, 0), Vector2(3, 0)],	# I
-	[Vector2(0, 0), Vector2(1, 0), Vector2(2, 0), Vector2(1, 1)],	# T
+	[Vector2(0, 1), Vector2(1, 1), Vector2(2, 1), Vector2(0, 0)],	# J
+	[Vector2(0, 0), Vector2(1, 0), Vector2(2, 0), Vector2(0, 1)],	# L
+	[Vector2(0, 0), Vector2(1, 0), Vector2(0, 1), Vector2(1, 1)],	# O
 	[Vector2(0, 0), Vector2(1, 0), Vector2(1, 1), Vector2(2, 1)],	# S
+	[Vector2(0, 0), Vector2(1, 0), Vector2(2, 0), Vector2(1, 1)],	# T
 	[Vector2(0, 1), Vector2(1, 1), Vector2(1, 0), Vector2(2, 0)]	# Z
+]
+
+var colors = [
+	Color("#aa0000"),
+	Color("#aa00aa"),
+	Color("#aaaa00"),
+	Color("#00aaaa"),
+	Color("#0000aa"),
+	Color("#c0c0c0"),
+	Color("#00aa00")
 ]
 
 func _ready():
@@ -24,9 +35,11 @@ func _process(delta):
 
 func move_block_down(speed):
 	if spawn <= 0:
+		var shape_i = randi() % shapes.size()
 		var spec = {
 			'type': randi() % 4,
-			'shape': shapes[randi() % shapes.size()],
+			'tint': colors[shape_i].lightened(0.75),
+			'shape': shapes[shape_i],
 			'offset_x': randi() % (grid_width - 4)
 		}
 		spawn_tetromino_at(randi() % grid_width, -1, spec)

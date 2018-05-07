@@ -17,6 +17,9 @@ func init(grid_x, grid_y, type, parent = null):
 	$Sprite.frame = type
 	update_position()
 
+func set_tint(color):
+	$Sprite.modulate = color
+
 func move_down(speed):
 	grid_position.y += 1
 
