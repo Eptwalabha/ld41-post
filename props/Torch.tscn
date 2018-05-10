@@ -7,7 +7,7 @@
 [sub_resource type="CircleShape2D" id=1]
 
 custom_solver_bias = 0.0
-radius = 5.7117
+radius = 11.4262
 
 [node name="Torch" type="Node2D"]
 
@@ -23,9 +23,9 @@ _sections_unfolded = [ "Animation" ]
 
 [node name="Fire" parent="." index="1" instance=ExtResource( 3 )]
 
-position = Vector2( 0, -26.9903 )
+position = Vector2( 0, -29.3686 )
 scale = Vector2( 1.37463, 1.42733 )
-emitting = false
+_sections_unfolded = [ "Process Material", "Time", "Visibility" ]
 
 [node name="Area2D" type="Area2D" parent="." index="2"]
 

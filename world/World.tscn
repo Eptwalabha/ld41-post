@@ -50,6 +50,13 @@ rotation = 0.785397
 position = Vector2( 248, 704 )
 lit = true
 
-[connection signal="move_down_ended" from="Grid" to="." method="_on_Grid_move_down_ended"]
+[node name="Tween" type="Tween" parent="." index="4"]
+
+repeat = false
+playback_process_mode = 1
+playback_speed = 1.0
+playback/active = false
+playback/repeat = false
+playback/speed = 1.0
 
 

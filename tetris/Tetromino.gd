@@ -13,13 +13,14 @@ func init(x, y, spec):
 		block.set_tint(spec.tint)
 		$Blocks.add_child(block)
 
-func move_down():
+func move_down(speed):
 	for block in $Blocks.get_children():
-		block.grid_position.y += 1
+		block.move_down(speed)
+		#block.grid_position.y += 1
 
-func move_to(direction):
+func move_to(direction, speed):
 	for block in $Blocks.get_children():
-		block.move_to(direction)
+		block.move_to(direction, speed)
 
 func get_blocks():
 	return $Blocks.get_children()

@@ -14,7 +14,7 @@ onready var weapon_types = {
 }
 
 func _ready():
-	set_weapon('laser')
+	set_weapon('regular')
 	$Aiming.add_point(Vector2())
 	$Tween.connect("tween_completed", self, "_on_Tween_movement_completed")
 	$Sprite.frame = 2

@@ -1,11 +1,13 @@
 extends Node2D
 
 signal move_down_ended
+signal move_ended
 signal block_destroyed(position)
 
 var grid_width = 10
 var grid_height = 22
 var spawn = 0
+var trans_speed = 0.1
 
 var shapes = [
 	[Vector2(0, 0), Vector2(1, 0), Vector2(2, 0), Vector2(3, 0)],	# I
@@ -34,22 +36,26 @@ func _process(delta):
 	pass
 
 func move_block_down(speed):
+	next_block()
+	clean_old_blocks()
+	check_for_full_raw()
+	for tetromino in $Tetrominos.get_children():
+		tetromino.move_down(speed)
+	$Tween.interpolate_callback(self, speed, "move_down_ended")
+	$Tween.start()
+
+func next_block():
+	spawn -= 1
 	if spawn <= 0:
 		var shape_i = randi() % shapes.size()
 		var spec = {
 			'type': randi() % 4,
 			'tint': colors[shape_i].lightened(0.75),
 			'shape': shapes[shape_i],
-			'offset_x': randi() % (grid_width - 4)
+			'offset_x': randi() % 6
 		}
 		spawn_tetromino_at(randi() % grid_width, -1, spec)
-		spawn = 3
-	spawn -= 1
-	clean_old_blocks()
-	check_for_full_raw()
-	for tetromino in $Tetrominos.get_children():
-		tetromino.move_down()
-	emit_signal("move_down_ended")
+		spawn = 2
 
 func clean_old_blocks():
 	for tetromino in $Tetrominos.get_children():
@@ -59,8 +65,36 @@ func clean_old_blocks():
 		tetromino.destroy_if_empty()
 
 func check_for_full_raw():
-	# delete line of blocks here
-	pass
+	var grid = get_current_grid()
+	for i in range(grid_height):
+		if is_line_complete(i, grid):
+			delete_line(i)
+
+func is_line_complete(line_number, grid):
+	for i in range(grid_width):
+		if grid[i][line_number] == null:
+			return false
+	return true
+
+func delete_line(line_number):
+	for tetromino in $Tetrominos.get_children():
+		for block in tetromino.get_blocks():
+			if block.grid_position.y == line_number:
+				block.queue_free()
+
+func get_current_grid():
+	var grid = []
+	grid.resize(grid_width)
+	for x in range(grid_width):
+		grid[x] = []
+		grid[x].resize(grid_height)
+		for y in range(grid_height):
+			grid[x][y] = null
+	for tetromino in $Tetrominos.get_children():
+		for block in tetromino.get_blocks():
+			if within_bounds(block.grid_position):
+				grid[block.grid_position.x][block.grid_position.y] = block
+	return grid
 
 func block_has_been_hit(block, normal):
 	match block.type:
@@ -80,13 +114,17 @@ func spawn_tetromino_at(x, y, tetromino_spec):
 
 func move_block_to(block, direction):
 	if can_move_block(block, direction):
-		block.move_to(direction)
+		block.move_to(direction, trans_speed)
+	$Tween.interpolate_callback(self, trans_speed, "move_ended")
+	$Tween.start()
 
 func move_tetromino_to(block, direction):
 	var tetromino = block.parent
 	if tetromino:
 		if can_move_tetromino(tetromino, direction):
-			tetromino.move_to(direction)
+			tetromino.move_to(direction, trans_speed)
+	$Tween.interpolate_callback(self, trans_speed, "move_ended")
+	$Tween.start()
 
 func can_move_block(block, direction, true_if_same_parent = false):
 	var next_position = block.grid_position + direction
@@ -106,9 +144,13 @@ func can_move_tetromino(tetromino, direction):
 func block_at(grid_position):
 	for tetromino in $Tetrominos.get_children():
 		for block in tetromino.get_blocks():
-			if block.grid_position.x == grid_position.x and block.grid_position.y == grid_position.y:
+			if eq(block.grid_position, grid_position):
 				return block
 	return null
+
+# see https://github.com/godotengine/godot/issues/17971
+func eq(a, b):
+	return abs(a.x - b.x) < 0.00001 and abs(a.y - b.y) < 0.00001
 
 func is_grid_position_available(grid_position):
 	return within_bounds(grid_position) and not block_at(grid_position)
@@ -118,3 +160,9 @@ func within_bounds(position):
 
 func within_bounds_x(x):
 	return x >= 0 and x < grid_width
+
+func move_down_ended():
+	emit_signal("move_down_ended")
+
+func move_ended():
+	emit_signal("move_ended")

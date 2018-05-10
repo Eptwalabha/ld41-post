@@ -11,6 +11,8 @@ func _ready():
 	$Player.connect("moved", self, "_on_Player_moved")
 	$Player.connect("fired", self, "_on_Player_fired")
 	$Grid.connect("block_destroyed", self, "_on_Block_destroyed")
+	$Grid.connect("move_down_ended", self, "_on_Grid_move_down_ended")
+	$Grid.connect("move_ended", self, "_on_Grid_move_ended")
 	$Tick.set_wait_time(speed)
 	#$Tick.start()
 
@@ -57,24 +59,31 @@ func _on_Bullet_hit(ray_result):
 		$Grid.block_has_been_hit(body, ray_result.normal)
 
 func _on_Bullet_end():
-	$Grid.move_block_down(speed / 3)
+	$Tween.interpolate_callback(self, 0.1, "move_down")
+	$Tween.start()
+
+func move_down():
+	$Grid.move_block_down(.1)
 	#$Tick.start()
 	resume()
 
 func _on_Tick_timeout():
-	$Grid.move_block_down(speed / 3)
+	$Grid.move_block_down(.1)
 
 func _on_Grid_move_down_ended():
 	#$Tick.start()
+	pass
+
+func _on_Grid_move_ended():
 	pass
 
 func _on_Player_fired():
 	pause()
 
 func _on_Player_moved():
-	$Grid.move_block_down(speed / 3)
-	#$Tick.start()
 	pass
+	#$Grid.move_block_down(speed / 3)
+	#$Tick.start()
 
 func _on_Block_destroyed(position):
 	spawn_explosion(position)

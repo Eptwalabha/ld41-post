@@ -29,6 +29,8 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="Walls" type="Node2D" parent="." index="0"]
 
+editor/display_folded = true
+
 [node name="Top" type="Area2D" parent="Walls" index="0"]
 
 input_pickable = true
@@ -93,5 +95,14 @@ scale = Vector2( 1, 1.15339 )
 shape = SubResource( 4 )
 
 [node name="Tetrominos" type="Node" parent="." index="1"]
+
+[node name="Tween" type="Tween" parent="." index="2"]
+
+repeat = false
+playback_process_mode = 1
+playback_speed = 1.0
+playback/active = false
+playback/repeat = false
+playback/speed = 1.0
 
 

@@ -2,6 +2,7 @@ extends Node2D
 
 var type = 0
 var grid_position = Vector2()
+var offset = Vector2()
 var parent = null
 
 func _ready():
@@ -21,13 +22,22 @@ func set_tint(color):
 	$Sprite.modulate = color
 
 func move_down(speed):
-	grid_position.y += 1
+	move_to(Vector2(0, 1), speed)
 
-func move_to (direction):
+func move_to (direction, speed):
 	grid_position += direction
+	offset += direction * -1
+	interpolate(speed)
+
+func interpolate(speed):
+	$Tween.interpolate_property(self, "offset",
+				offset, Vector2(0, 0),
+				speed,
+				Tween.TRANS_LINEAR, Tween.EASE_IN)
+	$Tween.start()
 
 func _process(delta):
 	update_position()
 
 func update_position():
-	position = grid_position * 32
+	position = (grid_position + offset) * 32
