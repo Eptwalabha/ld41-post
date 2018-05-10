@@ -41,8 +41,13 @@ func resume():
 	paused = false
 	$Tick.set_paused(paused)
 
-func spawn_explosion(position):
-	pass
+func spawn_explosion(grid_position):
+	var explosion = preload("res://tetris/Effects/Explosion.tscn").instance()
+	explosion.position = grid_position * 32
+	explosion.position += Vector2(16, 16)
+	add_child(explosion)
+	explosion.play()
+	$Explosion.play()
 
 func spawn_hit_particle(position, rotation):
 	var particle = Particle.instance()
