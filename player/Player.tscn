@@ -51,10 +51,10 @@ _sections_unfolded = [ "Fill", "Material", "Visibility" ]
 
 script = ExtResource( 3 )
 bullet_bounces = 1
-bullet_speed = 800
+bullet_speed = 1000
 cooldown_amount = 0.5
 cooldown = 0
-color = Color( 0.8, 0.8, 0.8, 1 )
+color = Color( 0.8, 0.8, 0.8, 0.541451 )
 
 [node name="Laser" type="Node2D" parent="Weapon" index="1"]
 

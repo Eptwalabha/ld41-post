@@ -3,6 +3,7 @@ extends Node
 export (float) var speed = 3
 export (int) var bullet_speed = 1000
 var Particle = preload("res://particles/Hit.tscn")
+var Explosion = preload("res://tetris/Effects/Explosion.tscn")
 var paused = false
 
 func _ready():
@@ -43,7 +44,7 @@ func resume():
 	$Tick.set_paused(paused)
 
 func spawn_explosion(grid_position):
-	var explosion = preload("res://tetris/Effects/Explosion.tscn").instance()
+	var explosion = Explosion.instance()
 	explosion.position = grid_position * 32
 	explosion.position += Vector2(16, 16)
 	add_child(explosion)
@@ -58,6 +59,11 @@ func spawn_hit_particle(position, rotation):
 	particle.set_emitting(true)
 	return particle
 
+func move_down():
+	$Grid.move_block_down(.1)
+	#$Tick.start()
+	resume()
+
 func _on_Bullet_hit(ray_result):
 	var body = ray_result.collider
 	spawn_hit_particle(ray_result.position, ray_result.normal.angle())
@@ -67,11 +73,6 @@ func _on_Bullet_hit(ray_result):
 func _on_Bullet_end():
 	$Tween.interpolate_callback(self, 0.1, "move_down")
 	$Tween.start()
-
-func move_down():
-	$Grid.move_block_down(.1)
-	#$Tick.start()
-	resume()
 
 func _on_Tick_timeout():
 	$Grid.move_block_down(.1)

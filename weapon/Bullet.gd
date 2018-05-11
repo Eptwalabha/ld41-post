@@ -26,6 +26,7 @@ func next_move():
 	next = weapon.next_collision_point(position, direction, next)
 	if next:
 		var duration = position.distance_to(next.position) / weapon.bullet_speed
+		rotation = direction.angle()
 		$Tween.interpolate_property(
 					self, "position",
 					position, next.position,
