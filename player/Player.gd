@@ -1,7 +1,8 @@
-extends Node2D
+extends Area2D
 
 signal moved
 signal fired
+signal takes_damage(block)
 
 var weapon = null
 var grid_position = Vector2()
@@ -81,3 +82,6 @@ func shoot(parent):
 func _on_Tween_movement_completed(obj, key):
 	moving = false
 	emit_signal("moved")
+
+func _on_Player_area_entered(area):
+	emit_signal("takes_damage", area)

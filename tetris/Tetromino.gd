@@ -28,3 +28,10 @@ func get_blocks():
 func destroy_if_empty():
 	if $Blocks.get_children().size() == 0:
 		queue_free()
+
+func destroy_all_blocks():
+	var points = []
+	for block in $Blocks.get_children():
+		points.append(block.grid_position)
+	queue_free()
+	return points

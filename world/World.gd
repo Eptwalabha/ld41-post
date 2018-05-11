@@ -10,6 +10,7 @@ func _ready():
 	$Player.set_grid_position(floor($Grid.grid_width / 2), $Grid.grid_height - 1)
 	$Player.connect("moved", self, "_on_Player_moved")
 	$Player.connect("fired", self, "_on_Player_fired")
+	$Player.connect("takes_damage", self, "_on_Player_takes_damage")
 	$Grid.connect("block_destroyed", self, "_on_Block_destroyed")
 	$Grid.connect("move_down_ended", self, "_on_Grid_move_down_ended")
 	$Grid.connect("move_ended", self, "_on_Grid_move_ended")
@@ -85,10 +86,16 @@ func _on_Grid_move_ended():
 func _on_Player_fired():
 	pause()
 
+func _on_Player_takes_damage(block):
+	if block.is_in_group("block"):
+		var positions = block.parent.destroy_all_blocks()
+		for pos in positions:
+			spawn_explosion(pos)
+
 func _on_Player_moved():
-	pass
 	#$Grid.move_block_down(speed / 3)
 	#$Tick.start()
+	pass
 
 func _on_Block_destroyed(position):
 	spawn_explosion(position)
