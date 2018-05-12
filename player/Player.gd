@@ -1,8 +1,11 @@
 extends Area2D
 
-signal moved
-signal fired
-signal takes_damage(block)
+signal start_moving(from)
+signal end_moving(to)
+signal start_shooting
+signal end_shooting
+
+signal collide_with(block)
 
 var weapon = null
 var grid_position = Vector2()
@@ -43,6 +46,7 @@ func update_aiming(grid):
 		$Aiming.points[i] = points[i] - position
 
 func move_x(x):
+	emit_signal("start_moving", grid_position)
 	moving = true
 	grid_position.x += x
 	var next_position = grid_position * 32 + Vector2(16, 16)
@@ -75,13 +79,16 @@ func shoot(parent):
 		if bullet:
 			parent.add_child(bullet)
 			bullet.start()
-			bullet.connect("bullet_end", parent, "_on_Bullet_end")
+			bullet.connect("bullet_end", self, "_on_Bullet_end")
 			bullet.connect("bullet_hit", parent, "_on_Bullet_hit")
-			emit_signal("fired")
+			emit_signal("start_shooting")
 
 func _on_Tween_movement_completed(obj, key):
 	moving = false
-	emit_signal("moved")
+	emit_signal("end_moving", grid_position)
 
 func _on_Player_area_entered(area):
-	emit_signal("takes_damage", area)
+	emit_signal("collide_with", area)
+
+func _on_Bullet_end():
+	emit_signal("end_shooting")

@@ -3,41 +3,37 @@ extends Node2D
 var type = 0
 var grid_position = Vector2()
 var offset = Vector2()
-var parent = null
+var parent_tetromino = null
+var destruct = false
 
-func _ready():
-	pass
-
-func set_tetromino(tetromino):
-	parent = tetromino
-
-func init(grid_x, grid_y, type, parent = null):
+func init(grid_x, grid_y, type, tetromino = null):
 	grid_position = Vector2(grid_x, grid_y)
 	self.type = type
-	self.parent = parent
+	parent_tetromino = tetromino
 	$Sprite.frame = type
-	update_position()
+	_update_position()
 
 func set_tint(color):
 	$Sprite.modulate = color
 
-func move_down(speed):
-	move_to(Vector2(0, 1), speed)
+func move_down(tween_duration = 0):
+	move_to(Vector2(0, 1), tween_duration)
 
-func move_to (direction, speed):
+func move_to (direction, tween_duration = 0):
 	grid_position += direction
-	offset += direction * -1
-	interpolate(speed)
+	if tween_duration > 0:
+		offset += direction * -1
+		_interpolate(tween_duration)
 
-func interpolate(speed):
+func _interpolate(tween_duration):
 	$Tween.interpolate_property(self, "offset",
 				offset, Vector2(0, 0),
-				speed,
+				tween_duration,
 				Tween.TRANS_LINEAR, Tween.EASE_IN)
 	$Tween.start()
 
 func _process(delta):
-	update_position()
+	_update_position()
 
-func update_position():
+func _update_position():
 	position = (grid_position + offset) * 32

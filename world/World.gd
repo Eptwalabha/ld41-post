@@ -9,9 +9,11 @@ var paused = false
 func _ready():
 	paused = false
 	$Player.set_grid_position(floor($Grid.grid_width / 2), $Grid.grid_height - 1)
-	$Player.connect("moved", self, "_on_Player_moved")
-	$Player.connect("fired", self, "_on_Player_fired")
-	$Player.connect("takes_damage", self, "_on_Player_takes_damage")
+	$Player.connect("start_moving", self, "_on_Player_start_moving")
+	$Player.connect("end_moving", self, "_on_Player_end_moving")
+	$Player.connect("start_shooting", self, "_on_Player_start_shooting")
+	$Player.connect("end_shooting", self, "_on_Player_end_shooting")
+	$Player.connect("collide_with", self, "_on_Player_collide_with")
 	$Grid.connect("block_destroyed", self, "_on_Block_destroyed")
 	$Grid.connect("move_down_ended", self, "_on_Grid_move_down_ended")
 	$Grid.connect("move_ended", self, "_on_Grid_move_ended")
@@ -19,10 +21,12 @@ func _ready():
 	#$Tick.start()
 
 func _process(delta):
-	if Input.is_mouse_button_pressed(BUTTON_LEFT) and not paused:
+	if paused:
+		return
+	if Input.is_mouse_button_pressed(BUTTON_LEFT):
 		if $Player.shoot(self):
 			pause()
-	if not paused and $Player.ready_to_move():
+	if $Player.ready_to_move():
 		if Input.is_action_pressed("ui_right"):
 			move_player(1)
 		if Input.is_action_pressed("ui_left"):
@@ -49,7 +53,6 @@ func spawn_explosion(grid_position):
 	explosion.position += Vector2(16, 16)
 	add_child(explosion)
 	explosion.play()
-	$Explosion.play()
 
 func spawn_hit_particle(position, rotation):
 	var particle = Particle.instance()
@@ -60,7 +63,7 @@ func spawn_hit_particle(position, rotation):
 	return particle
 
 func move_down():
-	$Grid.move_block_down(.1)
+	$Grid.move_block_down(.05)
 	#$Tick.start()
 	resume()
 
@@ -69,10 +72,6 @@ func _on_Bullet_hit(ray_result):
 	spawn_hit_particle(ray_result.position, ray_result.normal.angle())
 	if body.is_in_group("block"):
 		$Grid.block_has_been_hit(body, ray_result.normal)
-
-func _on_Bullet_end():
-	$Tween.interpolate_callback(self, 0.1, "move_down")
-	$Tween.start()
 
 func _on_Tick_timeout():
 	$Grid.move_block_down(.1)
@@ -84,19 +83,26 @@ func _on_Grid_move_down_ended():
 func _on_Grid_move_ended():
 	pass
 
-func _on_Player_fired():
+# Player's signals
+func _on_Player_start_shooting():
 	pause()
 
-func _on_Player_takes_damage(block):
-	if block.is_in_group("block"):
-		var positions = block.parent.destroy_all_blocks()
-		for pos in positions:
-			spawn_explosion(pos)
+func _on_Player_end_shooting():
+	$Tween.interpolate_callback(self, 0.1, "move_down")
+	$Tween.start()
 
-func _on_Player_moved():
-	#$Grid.move_block_down(speed / 3)
-	#$Tick.start()
-	pass
+func _on_Player_collide_with(block):
+	if block.is_in_group("block"):
+		var positions = block.parent_tetromino.destroy_all_blocks()
+		for pos in positions:
+			spawn_explosion(pos, 0)
+
+func _on_Player_start_moving(from):
+	pause()
+
+func _on_Player_end_moving(to):
+	$Tween.interpolate_callback(self, 0.1, "move_down")
+	$Tween.start()
 
 func _on_Block_destroyed(position):
 	spawn_explosion(position)
