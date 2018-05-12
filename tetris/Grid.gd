@@ -1,7 +1,7 @@
 extends Node2D
 
-signal move_down_ended
-signal move_ended
+signal start_moving_blocks_down
+signal end_moving_blocks_down
 signal block_destroyed(position)
 
 var grid_width = 10
@@ -30,6 +30,7 @@ var colors = [
 ]
 
 func move_block_down(tween_duration):
+	emit_signal("start_moving_blocks_down")
 	_next_block()
 	_clean_old_blocks()
 	var nbr_line_deleted = _check_for_full_raw()
@@ -38,7 +39,7 @@ func move_block_down(tween_duration):
 	var duration = tween_duration
 	if nbr_line_deleted > 0:
 		duration = tween_duration * 2
-	$Tween.interpolate_callback(self, duration, "emit_signal", "move_down_ended")
+	$Tween.interpolate_callback(self, duration, "emit_signal", "end_moving_blocks_down")
 	$Tween.start()
 
 func block_has_been_hit(block, normal):
@@ -118,16 +119,12 @@ func _spawn_tetromino_at(x, y, tetromino_spec):
 func _move_block_to(block, direction):
 	if _can_move_block(block, direction):
 		block.move_to(direction, trans_speed)
-	$Tween.interpolate_callback(self, trans_speed, "emit_signal", "move_ended")
-	$Tween.start()
 
 func _move_tetromino_to(block, direction):
 	var tetromino = block.parent_tetromino
 	if tetromino:
 		if _can_move_tetromino(tetromino, direction):
 			tetromino.move_to(direction, trans_speed)
-	$Tween.interpolate_callback(self, trans_speed, "emit_signal", "move_ended")
-	$Tween.start()
 
 func _can_move_block(block, direction, true_if_same_parent = false):
 	var next_position = block.grid_position + direction
