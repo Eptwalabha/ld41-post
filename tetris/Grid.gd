@@ -68,7 +68,7 @@ func _next_block():
 func _clean_old_blocks():
 	for tetromino in $Tetrominos.get_children():
 		for block in tetromino.get_blocks():
-			if block.grid_position.y >= grid_height:
+			if block.grid_position.y >= grid_height - 1:
 				block.queue_free()
 		tetromino.destroy_if_empty()
 
