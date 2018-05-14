@@ -20,7 +20,7 @@ func _ready():
 	$Grid.connect("block_destroyed", self, "_on_Grid_block_destroyed")
 	$Grid.connect("start_moving_blocks_down", self, "_on_Grid_start_moving_blocks_down")
 	$Grid.connect("end_moving_blocks_down", self, "_on_Grid_end_moving_blocks_down")
-	$Tick.set_wait_time(0.5)
+	$Tick.set_wait_time(0.2)
 
 func _change_game_mode(mode_name):
 	if modes[mode_name]:

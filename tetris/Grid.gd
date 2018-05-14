@@ -5,7 +5,7 @@ signal end_moving_blocks_down
 signal block_destroyed(position)
 
 var grid_width = 10
-var grid_height = 22
+var grid_height = 20
 var spawn = 0
 var trans_speed = 0.1
 

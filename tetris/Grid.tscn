@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://tetris/Grid.gd" type="Script" id=1]
+[ext_resource path="res://tetris/background.png" type="Texture" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -10,7 +11,7 @@ extents = Vector2( 192, 16 )
 [sub_resource type="RectangleShape2D" id=2]
 
 custom_solver_bias = 0.0
-extents = Vector2( 16, 384 )
+extents = Vector2( 16, 352 )
 
 [sub_resource type="RectangleShape2D" id=3]
 
@@ -20,14 +21,19 @@ extents = Vector2( 192, 16 )
 [sub_resource type="RectangleShape2D" id=4]
 
 custom_solver_bias = 0.0
-extents = Vector2( 16, 332.932 )
+extents = Vector2( 16, 305.187 )
 
 [node name="Grid" type="Node2D"]
 
 script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Walls" type="Node2D" parent="." index="0"]
+[node name="Background" type="Sprite" parent="." index="0"]
+
+position = Vector2( 320, 320 )
+texture = ExtResource( 2 )
+
+[node name="Walls" type="Node2D" parent="." index="1"]
 
 editor/display_folded = true
 
@@ -58,7 +64,7 @@ audio_bus_name = "Master"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Left" index="0"]
 
-position = Vector2( -16, 352 )
+position = Vector2( -16, 320 )
 shape = SubResource( 2 )
 
 [node name="Bottom" type="Area2D" parent="Walls" index="2"]
@@ -74,7 +80,7 @@ _sections_unfolded = [ "Collision" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Bottom" index="0"]
 
-position = Vector2( 160, 720 )
+position = Vector2( 160, 656 )
 shape = SubResource( 3 )
 
 [node name="Right" type="Area2D" parent="Walls" index="3"]
@@ -90,13 +96,13 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Right" index="0"]
 
-position = Vector2( 336, 352 )
+position = Vector2( 336, 320 )
 scale = Vector2( 1, 1.15339 )
 shape = SubResource( 4 )
 
-[node name="Tetrominos" type="Node" parent="." index="1"]
+[node name="Tetrominos" type="Node" parent="." index="2"]
 
-[node name="Tween" type="Tween" parent="." index="2"]
+[node name="Tween" type="Tween" parent="." index="3"]
 
 repeat = false
 playback_process_mode = 1

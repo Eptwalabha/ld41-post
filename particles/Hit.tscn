@@ -66,10 +66,10 @@ anim_offset_random = 0.0
 anim_loop = false
 _sections_unfolded = [ "Angle", "Angular Velocity", "Color", "Gravity", "Initial Velocity", "Scale", "Spread" ]
 
-[node name="Hit" type="Particles2D" index="0"]
+[node name="Hit" type="Particles2D"]
 
 emitting = false
-amount = 10
+amount = 7
 lifetime = 0.7
 one_shot = true
 preprocess = 0.0
@@ -77,7 +77,7 @@ speed_scale = 2.0
 explosiveness = 0.5
 randomness = 0.0
 fixed_fps = 0
-fract_delta = true
+fract_delta = false
 visibility_rect = Rect2( -100, -100, 200, 200 )
 local_coords = false
 draw_order = 0

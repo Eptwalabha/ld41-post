@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://world/World.gd" type="Script" id=1]
-[ext_resource path="res://player/Player.tscn" type="PackedScene" id=2]
-[ext_resource path="res://tetris/Grid.tscn" type="PackedScene" id=3]
+[ext_resource path="res://tetris/Grid.tscn" type="PackedScene" id=2]
+[ext_resource path="res://player/Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://props/Torch.tscn" type="PackedScene" id=4]
 [ext_resource path="res://world/game_modes/RealTime.gd" type="Script" id=5]
 [ext_resource path="res://world/game_modes/TurnBased.gd" type="Script" id=6]
@@ -11,11 +11,11 @@
 
 script = ExtResource( 1 )
 
-[node name="Player" parent="." index="0" instance=ExtResource( 2 )]
+[node name="Grid" parent="." index="0" instance=ExtResource( 2 )]
+
+[node name="Player" parent="." index="1" instance=ExtResource( 3 )]
 
 _sections_unfolded = [ "Transform" ]
-
-[node name="Grid" parent="." index="1" instance=ExtResource( 3 )]
 
 [node name="Tick" type="Timer" parent="." index="2"]
 
@@ -40,7 +40,7 @@ rotation = -0.785397
 
 [node name="Torch3" parent="Props" index="2" instance=ExtResource( 4 )]
 
-position = Vector2( 42.6309, 704.929 )
+position = Vector2( 40, 640 )
 
 [node name="Torch4" parent="Props" index="3" instance=ExtResource( 4 )]
 
@@ -49,7 +49,7 @@ rotation = 0.785397
 
 [node name="Torch5" parent="Props" index="4" instance=ExtResource( 4 )]
 
-position = Vector2( 248, 704 )
+position = Vector2( 248, 640 )
 lit = true
 
 [node name="Tween" type="Tween" parent="." index="4"]
